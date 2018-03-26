@@ -1,11 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { injectIntl, IntlProvider, FormattedRelative } from "react-intl";
+import {
+  injectIntl,
+  IntlProvider,
+  FormattedRelative,
+  addLocaleData
+} from "react-intl";
 import registerServiceWorker from "./registerServiceWorker";
 
+import fr from "react-intl/locale-data/fr";
+import de from "react-intl/locale-data/de";
+import es from "react-intl/locale-data/es";
+import en from "react-intl/locale-data/en";
+
+addLocaleData([...fr, ...de, ...es, ...en]);
+
 const PostDate = injectIntl(({ date, intl }) => (
-  <span title={intlFormatDate(date)}>
+  <span title={intl.formatDate(date)}>
     <FormattedRelative value={date} />
   </span>
 ));
@@ -13,13 +25,16 @@ const PostDate = injectIntl(({ date, intl }) => (
 const App = ({ post: { date, title, body } }) => (
   <div>
     <h1>{title}</h1>
-    <p>PostDate date={date}</p>
+    {console.log(navigator.language, navigator.languages)}
+    <p>
+      <PostDate date={date} />
+    </p>
     <div>{body}</div>
   </div>
 );
 
 ReactDOM.render(
-  <IntlProvider locale={navigator.language}>
+  <IntlProvider locale="de">
     <App
       post={{
         title: "Hello, World!",
