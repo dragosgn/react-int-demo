@@ -5,6 +5,7 @@ import {
   injectIntl,
   IntlProvider,
   FormattedRelative,
+  FormattedMessage,
   addLocaleData
 } from "react-intl";
 import registerServiceWorker from "./registerServiceWorker";
@@ -22,6 +23,12 @@ const PostDate = injectIntl(({ date, intl }) => (
   </span>
 ));
 
+type MessageDescriptor = {
+  id: string,
+  defaultMessage?: string,
+  description?: string | object
+};
+
 const App = ({ post: { date, title, body } }) => (
   <div>
     <h1>{title}</h1>
@@ -29,6 +36,14 @@ const App = ({ post: { date, title, body } }) => (
     <p>
       <PostDate date={date} />
     </p>
+    <FormattedMessage
+      id={"body.greeting"}
+      description="Hello to the app"
+      defaultMessage="Hello to our new app, {name}"
+      values={{
+        name: "Eric"
+      }}
+    />
     <div>{body}</div>
   </div>
 );
