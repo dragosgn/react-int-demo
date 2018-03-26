@@ -15,6 +15,8 @@ import de from "react-intl/locale-data/de";
 import es from "react-intl/locale-data/es";
 import en from "react-intl/locale-data/en";
 
+import messages from "./messages";
+
 addLocaleData([...fr, ...de, ...es, ...en]);
 
 const PostDate = injectIntl(({ date, intl }) => (
@@ -22,12 +24,6 @@ const PostDate = injectIntl(({ date, intl }) => (
     <FormattedRelative value={date} />
   </span>
 ));
-
-type MessageDescriptor = {
-  id: string,
-  defaultMessage?: string,
-  description?: string | object
-};
 
 const App = ({ post: { date, title, body } }) => (
   <div>
@@ -37,19 +33,17 @@ const App = ({ post: { date, title, body } }) => (
       <PostDate date={date} />
     </p>
     <FormattedMessage
-      id={"body.greeting"}
-      description="Hello to the app"
-      defaultMessage="Hello to our new app, {name}"
-      values={{
-        name: "Eric"
-      }}
+      id="body.greeting"
+      defaultMessage="Hello to our new app"
     />
     <div>{body}</div>
   </div>
 );
 
+const lang = "de";
+
 ReactDOM.render(
-  <IntlProvider locale="de">
+  <IntlProvider locale={lang} messages={messages[lang]}>
     <App
       post={{
         title: "Hello, World!",
