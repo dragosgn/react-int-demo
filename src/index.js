@@ -29,19 +29,7 @@ const PostDate = injectIntl(({ date, intl }) => (
 
 const locales = ["en", "de", "es", "fr"];
 
-let index;
-let locale = "de";
-
-const changeLocale = () => {
-  if (index < locales.length - 1) {
-    index = index + 1;
-  } else {
-    index = 0;
-  }
-  return locales[index];
-};
-
-const App = ({ post: { date, title, body }, locale }) => {
+const Home = ({ post: { date }, locale }) => {
   return (
     <div>
       <h1>Locale : {locale}</h1>
@@ -52,7 +40,6 @@ const App = ({ post: { date, title, body }, locale }) => {
         id="body.greeting"
         defaultMessage="Hello to our new app"
       />
-      <div>{body}</div>
     </div>
   );
 };
@@ -63,17 +50,29 @@ class Wrapper extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { locale: "de" };
+    this.state = {
+      locale: "de",
+      index: 0
+    };
+    this.changeLocale = this.changeLocale.bind(this);
+  }
+
+  changeLocale() {
+    let index = this.state.index;
+    if (index < locales.length - 1) {
+      index = index + 1;
+    } else {
+      index = 0;
+    }
+
+    this.setState({
+      locale: locales[index],
+      index: index
+    });
   }
 
   componentDidMount() {
-    const self = this;
-    setInterval(
-      self.setState({
-        locale: changeLocale()
-      }),
-      2000
-    );
+    setInterval(this.changeLocale, 2000);
   }
 
   render() {
@@ -83,11 +82,9 @@ class Wrapper extends React.Component {
           locale={this.state.locale}
           messages={messages[this.state.locale]}
         >
-          <App
+          <Home
             post={{
-              title: "Hello, World!",
-              date: new Date(1459913574887),
-              body: "Amazing content"
+              date: new Date(1459913574887)
             }}
             locale={this.state.locale}
           />
