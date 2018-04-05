@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "sh -ac '. .env.build; react-scripts build",
+    "build": "sh -ac '. .env.build; react-scripts build'",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
