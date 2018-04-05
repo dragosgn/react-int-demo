@@ -67,7 +67,7 @@ const Story = styled.h3`
   }
 `;
 
-const Home = ({ post: { date }, locale, switchLocale }) => {
+const Home = ({ post: { date }, locale, switchLocale, loopLocales }) => {
   let flag = () => {
     switch (locale) {
       case "de":
@@ -98,6 +98,7 @@ const Home = ({ post: { date }, locale, switchLocale }) => {
         <Button onClick={switchLocale} value="fr">
           {`🇫🇷`}
         </Button>
+        <Button onClick={loopLocales}>{`🦄`}</Button>
       </ButtonsRow>
       <h1>Current locale : {flag()}</h1>
       <Row>
@@ -136,6 +137,7 @@ class Wrapper extends React.Component {
     };
     this.changeLocale = this.changeLocale.bind(this);
     this.switchLocale = this.switchLocale.bind(this);
+    this.loopLocales = this.loopLocales.bind(this);
   }
 
   changeLocale() {
@@ -152,8 +154,10 @@ class Wrapper extends React.Component {
     });
   }
 
-  componentDidMount() {
-    setInterval(this.changeLocale, 3000);
+  componentDidMount() {}
+
+  loopLocales() {
+    setInterval(this.changeLocale, 1000);
   }
 
   switchLocale(e) {
@@ -187,6 +191,7 @@ class Wrapper extends React.Component {
             }}
             locale={this.state.locale}
             switchLocale={this.switchLocale}
+            loopLocales={this.loopLocales}
           />
         </IntlProvider>
       </Root>
