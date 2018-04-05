@@ -4,7 +4,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "build-create-react-app-netlify": "^1.1.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-intl": "^2.4.0",
@@ -13,12 +12,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "sh -ac '. .env.build; react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "build-netlify": "build-create-react-app-netlify"
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "gh-pages": "^1.1.0"
