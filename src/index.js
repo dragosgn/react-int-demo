@@ -40,7 +40,9 @@ const App = ({ post: { date, title, body } }) => (
   </div>
 );
 
-const lang = "de";
+const locales = ["en", "de", "es", "fr"];
+
+const lang = () => window.setTimeout(locales.map(locale => locale), 5000);
 
 ReactDOM.render(
   <IntlProvider locale={lang} messages={messages[lang]}>
