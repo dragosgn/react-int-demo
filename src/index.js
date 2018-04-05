@@ -36,7 +36,8 @@ const Row = styled.div`
 const ButtonsRow = styled(Row)``;
 
 const Label = styled.h3`
-  padding-right: 0.5rem;
+  padding-right: 1rem;
+  display: flex;
 `;
 
 const Root = styled.div`
@@ -51,11 +52,18 @@ const Button = styled.button`
   font-size: 1rem;
   display: flex;
   width: 6rem;
+  cursor: pointer;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   :not(:last-child) {
     margin-right: 1rem;
+  }
+`;
+
+const Story = styled.h3`
+  > span {
+    font-family: "Berkshire Swash", cursive;
   }
 `;
 
@@ -77,6 +85,20 @@ const Home = ({ post: { date }, locale, switchLocale }) => {
 
   return (
     <div>
+      <ButtonsRow>
+        <Button onClick={switchLocale} value="de">
+          {`🇩🇪`}
+        </Button>
+        <Button onClick={switchLocale} value="es">
+          {`🇪🇸`}
+        </Button>
+        <Button onClick={switchLocale} value="en">
+          {`🇬🇧`}
+        </Button>
+        <Button onClick={switchLocale} value="fr">
+          {`🇫🇷`}
+        </Button>
+      </ButtonsRow>
       <h1>Current locale : {flag()}</h1>
       <Row>
         <Label>Formated date: </Label>
@@ -93,20 +115,13 @@ const Home = ({ post: { date }, locale, switchLocale }) => {
           />
         </h2>
       </Row>
-      <ButtonsRow>
-        <Button onClick={switchLocale} value="de">
-          {`🇩🇪`}
-        </Button>
-        <Button onClick={switchLocale} value="es">
-          {`🇪🇸`}
-        </Button>
-        <Button onClick={switchLocale} value="en">
-          {`🇬🇧`}
-        </Button>
-        <Button onClick={switchLocale} value="fr">
-          {`🇫🇷`}
-        </Button>
-      </ButtonsRow>
+
+      <Row>
+        <Label>Formated Story: </Label>
+        <Story>
+          <FormattedMessage id="body.story" default="A little story" />
+        </Story>
+      </Row>
     </div>
   );
 };
@@ -142,10 +157,18 @@ class Wrapper extends React.Component {
   }
 
   switchLocale(e) {
-    console.log(e.target.value);
     switch (e.target.value) {
       case "de":
         this.setState({ locale: "de" });
+        break;
+      case "en":
+        this.setState({ locale: "en" });
+        break;
+      case "es":
+        this.setState({ locale: "es" });
+        break;
+      case "fr":
+        this.setState({ locale: "fr" });
         break;
       default:
     }
