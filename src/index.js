@@ -38,16 +38,13 @@ const changeLocale = () => {
   } else {
     index = 0;
   }
-  console.log(locale);
-  locale = locales[index];
+  return locales[index];
 };
 
-const App = ({ post: { date, title, body } }) => {
-  window.setInterval(changeLocale, 2000);
+const App = ({ post: { date, title, body }, locale }) => {
   return (
     <div>
-      <h1>{title}</h1>
-      {console.log(navigator.language, navigator.languages)}
+      <h1>Locale : {locale}</h1>
       <p>
         <PostDate date={date} />
       </p>
@@ -62,18 +59,43 @@ const App = ({ post: { date, title, body } }) => {
 
 const Root = styled.div``;
 
-ReactDOM.render(
-  <Root locale={locale}>
-    <IntlProvider locale={locale} messages={messages[locale]}>
-      <App
-        post={{
-          title: "Hello, World!",
-          date: new Date(1459913574887),
-          body: "Amazing content"
-        }}
-      />
-    </IntlProvider>
-  </Root>,
-  document.getElementById("root")
-);
+class Wrapper extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { locale: "de" };
+  }
+
+  componentDidMount() {
+    const self = this;
+    setInterval(
+      self.setState({
+        locale: changeLocale()
+      }),
+      2000
+    );
+  }
+
+  render() {
+    return (
+      <Root>
+        <IntlProvider
+          locale={this.state.locale}
+          messages={messages[this.state.locale]}
+        >
+          <App
+            post={{
+              title: "Hello, World!",
+              date: new Date(1459913574887),
+              body: "Amazing content"
+            }}
+            locale={this.state.locale}
+          />
+        </IntlProvider>
+      </Root>
+    );
+  }
+}
+
+ReactDOM.render(<Wrapper />, document.getElementById("root"));
 registerServiceWorker();
