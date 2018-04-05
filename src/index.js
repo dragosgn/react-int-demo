@@ -37,7 +37,19 @@ const Label = styled.h3`
   padding-right: 0.5rem;
 `;
 
-const Home = ({ post: { date }, locale }) => {
+const Root = styled.div`
+  padding: 2rem;
+`;
+
+const Button = styled.button`
+  border-radius: 2px;
+  border: 0px solid transparent;
+  background-color: green;
+  padding: 0.25rem;
+  font-size: 1rem;
+`;
+
+const Home = ({ post: { date }, locale, switchLocale }) => {
   let flag = () => {
     switch (locale) {
       case "de":
@@ -71,13 +83,12 @@ const Home = ({ post: { date }, locale }) => {
           />
         </h2>
       </Row>
+      <Row>
+        <Button onClick={switchLocale}>DE: </Button>
+      </Row>
     </div>
   );
 };
-
-const Root = styled.div`
-  padding: 2rem;
-`;
 
 class Wrapper extends React.Component {
   constructor(props) {
@@ -88,6 +99,7 @@ class Wrapper extends React.Component {
       index: 0
     };
     this.changeLocale = this.changeLocale.bind(this);
+    this.switchLocale = this.switchLocale.bind(this);
   }
 
   changeLocale() {
@@ -108,6 +120,16 @@ class Wrapper extends React.Component {
     setInterval(this.changeLocale, 3000);
   }
 
+  switchLocale(e) {
+    console.log("e", e);
+    switch (e.target.value) {
+      case "de":
+        this.setState({ locale: "de" });
+        break;
+      default:
+    }
+  }
+
   render() {
     return (
       <Root>
@@ -120,6 +142,7 @@ class Wrapper extends React.Component {
               date: new Date(1459913574887)
             }}
             locale={this.state.locale}
+            switchLocale={this.switchLocale}
           />
         </IntlProvider>
       </Root>
