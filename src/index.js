@@ -28,6 +28,15 @@ const PostDate = injectIntl(({ date, intl }) => (
 
 const locales = ["en", "de", "es", "fr"];
 
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Label = styled.h3`
+  padding-right: 0.5rem;
+`;
+
 const Home = ({ post: { date }, locale }) => {
   let flag = () => {
     switch (locale) {
@@ -46,14 +55,22 @@ const Home = ({ post: { date }, locale }) => {
 
   return (
     <div>
-      <h1>Locale : {flag()}</h1>
-      <p>
-        <PostDate date={date} />
-      </p>
-      <FormattedMessage
-        id="body.greeting"
-        defaultMessage="Hello to our new app"
-      />
+      <h1>Current locale : {flag()}</h1>
+      <Row>
+        <Label>Formated date: </Label>
+        <h2>
+          <PostDate date={date} />
+        </h2>
+      </Row>
+      <Row>
+        <Label>Formated message: </Label>
+        <h2>
+          <FormattedMessage
+            id="body.greeting"
+            defaultMessage="Hello to our new app"
+          />
+        </h2>
+      </Row>
     </div>
   );
 };
