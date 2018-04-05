@@ -1,7 +1,5 @@
 {
-  "body": {
-    "greeting": "Hola, que tal?\n",
-    "subtitle": "Editor de servicios",
-    "title": "Calculacion de aticulos"
-  }
+  "body.greeting": "Hola, que tal?\n",
+  "body.subtitle": "Editor de servicios",
+  "body.title": "Calculacion de aticulos"
 }

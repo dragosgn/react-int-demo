@@ -10,6 +10,8 @@ import {
 } from "react-intl";
 import registerServiceWorker from "./registerServiceWorker";
 
+import styled from "styled-components";
+
 import fr from "react-intl/locale-data/fr";
 import de from "react-intl/locale-data/de";
 import es from "react-intl/locale-data/es";
@@ -25,35 +27,53 @@ const PostDate = injectIntl(({ date, intl }) => (
   </span>
 ));
 
-const App = ({ post: { date, title, body } }) => (
-  <div>
-    <h1>{title}</h1>
-    {console.log(navigator.language, navigator.languages)}
-    <p>
-      <PostDate date={date} />
-    </p>
-    <FormattedMessage
-      id="body.greeting"
-      defaultMessage="Hello to our new app"
-    />
-    <div>{body}</div>
-  </div>
-);
-
 const locales = ["en", "de", "es", "fr"];
 
-const lang = () => window.setTimeout(locales.map(locale => locale), 5000);
+let index;
+let locale = "de";
+
+const changeLocale = () => {
+  if (index < locales.length - 1) {
+    index = index + 1;
+  } else {
+    index = 0;
+  }
+  console.log(locale);
+  locale = locales[index];
+};
+
+const App = ({ post: { date, title, body } }) => {
+  window.setInterval(changeLocale, 2000);
+  return (
+    <div>
+      <h1>{title}</h1>
+      {console.log(navigator.language, navigator.languages)}
+      <p>
+        <PostDate date={date} />
+      </p>
+      <FormattedMessage
+        id="body.greeting"
+        defaultMessage="Hello to our new app"
+      />
+      <div>{body}</div>
+    </div>
+  );
+};
+
+const Root = styled.div``;
 
 ReactDOM.render(
-  <IntlProvider locale={lang} messages={messages[lang]}>
-    <App
-      post={{
-        title: "Hello, World!",
-        date: new Date(1459913574887),
-        body: "Amazing content"
-      }}
-    />
-  </IntlProvider>,
+  <Root locale={locale}>
+    <IntlProvider locale={locale} messages={messages[locale]}>
+      <App
+        post={{
+          title: "Hello, World!",
+          date: new Date(1459913574887),
+          body: "Amazing content"
+        }}
+      />
+    </IntlProvider>
+  </Root>,
   document.getElementById("root")
 );
 registerServiceWorker();
