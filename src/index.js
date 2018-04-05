@@ -33,6 +33,8 @@ const Row = styled.div`
   align-items: center;
 `;
 
+const ButtonsRow = styled(Row)``;
+
 const Label = styled.h3`
   padding-right: 0.5rem;
 `;
@@ -51,6 +53,10 @@ const Button = styled.button`
   width: 6rem;
   align-items: center;
   justify-content: center;
+  font-size: 1.5rem;
+  :not(:last-child) {
+    margin-right: 1rem;
+  }
 `;
 
 const Home = ({ post: { date }, locale, switchLocale }) => {
@@ -87,11 +93,20 @@ const Home = ({ post: { date }, locale, switchLocale }) => {
           />
         </h2>
       </Row>
-      <Row>
+      <ButtonsRow>
         <Button onClick={switchLocale} value="de">
-          DE:{`🇩🇪`}
+          {`🇩🇪`}
         </Button>
-      </Row>
+        <Button onClick={switchLocale} value="es">
+          {`🇪🇸`}
+        </Button>
+        <Button onClick={switchLocale} value="en">
+          {`🇬🇧`}
+        </Button>
+        <Button onClick={switchLocale} value="fr">
+          {`🇫🇷`}
+        </Button>
+      </ButtonsRow>
     </div>
   );
 };
@@ -127,13 +142,13 @@ class Wrapper extends React.Component {
   }
 
   switchLocale(e) {
-    console.log("e", e.target.value);
-    // switch (value) {
-    //   case "de":
-    //     this.setState({ locale: "de" });
-    //     break;
-    //   default:
-    // }
+    console.log(e.target.value);
+    switch (e.target.value) {
+      case "de":
+        this.setState({ locale: "de" });
+        break;
+      default:
+    }
   }
 
   render() {
