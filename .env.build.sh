@@ -1,3 +1,5 @@
+#!/bin/bash
+
 NPM_BIN="/opt/build/cache/yarn/bin/yarn"
 
 set -x
