@@ -30,9 +30,24 @@ const PostDate = injectIntl(({ date, intl }) => (
 const locales = ["en", "de", "es", "fr"];
 
 const Home = ({ post: { date }, locale }) => {
+  let flag = () => {
+    switch (locale) {
+      case "de":
+        return `🇩🇪`;
+      case "en":
+        return `🇬🇧`;
+      case "fr":
+        return `🇫🇷`;
+      case "es":
+        return `🇪🇸`;
+      default:
+        return `🇬🇧`;
+    }
+  };
+
   return (
     <div>
-      <h1>Locale : {locale}</h1>
+      <h1>Locale : {flag()}</h1>
       <p>
         <PostDate date={date} />
       </p>
@@ -44,7 +59,9 @@ const Home = ({ post: { date }, locale }) => {
   );
 };
 
-const Root = styled.div``;
+const Root = styled.div`
+  padding: 2rem;
+`;
 
 class Wrapper extends React.Component {
   constructor(props) {
@@ -72,7 +89,7 @@ class Wrapper extends React.Component {
   }
 
   componentDidMount() {
-    setInterval(this.changeLocale, 2000);
+    setInterval(this.changeLocale, 3000);
   }
 
   render() {
