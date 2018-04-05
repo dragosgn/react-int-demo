@@ -133,7 +133,8 @@ class Wrapper extends React.Component {
 
     this.state = {
       locale: "de",
-      index: 0
+      index: 0,
+      localeInterval: null
     };
     this.changeLocale = this.changeLocale.bind(this);
     this.switchLocale = this.switchLocale.bind(this);
@@ -157,10 +158,13 @@ class Wrapper extends React.Component {
   componentDidMount() {}
 
   loopLocales() {
-    setInterval(this.changeLocale, 1000);
+    this.setState({ localeInterval: setInterval(this.changeLocale, 1000) });
   }
 
   switchLocale(e) {
+    if (this.state.localeInterval) {
+      clearInterval(this.state.localeInterval);
+    }
     switch (e.target.value) {
       case "de":
         this.setState({ locale: "de" });
